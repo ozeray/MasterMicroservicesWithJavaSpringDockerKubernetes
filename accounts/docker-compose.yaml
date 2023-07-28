@@ -1,0 +1,30 @@
+version: "3.8"
+
+services:
+
+  accounts:
+    image: ahmet/accounts:latest
+    mem_limit: 700m #Doesn't work with docker-compose v3
+    ports:
+      - "8080:8080"
+    networks:
+      - eazybank-network
+
+  loans:
+    image: ahmet/loans:latest
+    mem_limit: 700m #Doesn't work with docker-compose v3
+    ports:
+      - "8090:8090"
+    networks:
+      - eazybank-network
+
+  cards:
+    image: ahmet/cards:latest
+    mem_limit: 700m #Doesn't work with docker-compose v3
+    ports:
+      - "9000:9000"
+    networks:
+      - eazybank-network
+
+networks:
+  eazybank-network:

@@ -60,6 +60,12 @@
 							<artifactId>lombok</artifactId>
 						</exclude>
 					</excludes>
+<!--&lt;!&ndash;					<image>&ndash;&gt; For use with Packeto buildpacks-->
+<!--						<name>ahmet/${project.artifactId}</name>-->
+<!--						<env>-->
+<!--							<BP_JVM_VERSION>${java.version}</BP_JVM_VERSION>-->
+<!--						</env>-->
+<!--					</image>-->
 				</configuration>
 			</plugin>
 		</plugins>
