@@ -1,0 +1,73 @@
+version: "3.8"
+
+services:
+
+  configserver:
+    image: ayozer/configserver:latest
+    ports:
+      - "8071:8071"
+    networks:
+     - ayozer
+    environment:
+      ENCRYPT_KEY: D@57ws!wA
+      
+  accounts:
+    image: ayozer/accounts:latest
+    ports:
+      - "8080:8080"
+    networks:
+      - ayozer
+    depends_on:
+      - configserver
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+    environment:
+      SPRING_APPLICATION_NAME: accounts
+      SPRING_PROFILES_ACTIVE: default
+      SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/ #configserver is resolved by Docker
+                                                                   #using the configserver service declared above...
+  
+  loans:
+    image: ayozer/loans:latest
+    ports:
+      - "8090:8090"
+    networks:
+      - ayozer
+    depends_on:
+      - configserver
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+    environment:
+      SPRING_APPLICATION_NAME: loans
+      SPRING_PROFILES_ACTIVE: default
+      SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/
+    
+  cards:
+    image: ayozer/cards:latest
+    ports:
+      - "9000:9000"
+    networks:
+      - ayozer
+    depends_on:
+      - configserver
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+    environment:
+      SPRING_APPLICATION_NAME: cards
+      SPRING_PROFILES_ACTIVE: default
+      SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/
+      
+networks:
+  ayozer:

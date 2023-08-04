@@ -47,6 +47,14 @@
 			<artifactId>spring-cloud-starter-config</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>org.springframework.cloud</groupId>-->
+<!--			<artifactId>spring-cloud-starter-openfeign</artifactId>-->
+<!--		</dependency>-->
+		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<scope>provided</scope>
@@ -78,7 +86,7 @@
 						</exclude>
 					</excludes>
 					<image> <!-- For use with Packeto buildpacks -->
-						<name>ahmet/${project.artifactId}</name>
+						<name>ayozer/${project.artifactId}</name>
 						<env>
 							<BP_JVM_VERSION>${java.version}</BP_JVM_VERSION>
 						</env>

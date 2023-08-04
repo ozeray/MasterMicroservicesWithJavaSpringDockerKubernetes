@@ -3,28 +3,28 @@ version: "3.8"
 services:
 
   accounts:
-    image: ahmet/accounts:latest
+    image: ayozer/accounts:latest
     mem_limit: 700m #Doesn't work with docker-compose v3
     ports:
       - "8080:8080"
     networks:
-      - eazybank-network
+      - ayozer-network
 
   loans:
-    image: ahmet/loans:latest
+    image: ayozer/loans:latest
     mem_limit: 700m #Doesn't work with docker-compose v3
     ports:
       - "8090:8090"
     networks:
-      - eazybank-network
+      - ayozer-network
 
   cards:
-    image: ahmet/cards:latest
+    image: ayozer/cards:latest
     mem_limit: 700m #Doesn't work with docker-compose v3
     ports:
       - "9000:9000"
     networks:
-      - eazybank-network
+      - ayozer-network
 
 networks:
-  eazybank-network:
+  ayozer-network:

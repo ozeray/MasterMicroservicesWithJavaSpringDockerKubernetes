@@ -52,7 +52,7 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
 					<image>
-						<name>ahmet/${project.artifactId}</name>
+						<name>ayozer/${project.artifactId}</name>
 						<env>
 							<BP_JVM_VERSION>${java.version}</BP_JVM_VERSION>
 						</env>
