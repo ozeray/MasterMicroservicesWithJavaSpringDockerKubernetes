@@ -52,27 +52,27 @@ services:
                                                                    #using the configserver service declared above...
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8070/eureka/
 
-  accounts1:
-    image: ayozer/accounts:latest
-    ports:
-      - "8081:8080"
-    networks:
-      - ayozer
-    depends_on:
-      - configserver
-      - eurekaserver
-    deploy:
-      restart_policy:
-        condition: on-failure
-        delay: 30s
-        max_attempts: 3
-        window: 120s
-    environment:
-      SPRING_APPLICATION_NAME: accounts
-      SPRING_PROFILES_ACTIVE: default
-      SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/ #configserver is resolved by Docker
-                                                                   #using the configserver service declared above...
-      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8070/eureka/
+#  accounts1:
+#    image: ayozer/accounts:latest
+#    ports:
+#      - "8081:8080"
+#    networks:
+#      - ayozer
+#    depends_on:
+#      - configserver
+#      - eurekaserver
+#    deploy:
+#      restart_policy:
+#        condition: on-failure
+#        delay: 30s
+#        max_attempts: 3
+#        window: 120s
+#    environment:
+#      SPRING_APPLICATION_NAME: accounts
+#      SPRING_PROFILES_ACTIVE: default
+#      SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/ #configserver is resolved by Docker
+#                                                                   #using the configserver service declared above...
+#      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8070/eureka/
 
   loans:
     image: ayozer/loans:latest

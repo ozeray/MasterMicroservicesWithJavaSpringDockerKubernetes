@@ -8,6 +8,9 @@ import com.ahmet.accounts.service.client.LoansFeignClient;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
+import io.github.resilience4j.retry.annotation.Retry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -49,6 +52,8 @@ public class AccountsController {
         return ow.writeValueAsString(properties);
     }
     @PostMapping("/myCustomerDetails")
+//    @CircuitBreaker(name = "detailsForCustomerSupportApp", fallbackMethod = "getCustomerDetailsFallback")
+    @Retry(name = "retryForCustomerDetails", fallbackMethod = "getCustomerDetailsFallback")
     public CustomerDetails getCustomerDetails(@RequestBody Customer customer) {
         Accounts accounts = accountsRepository.findByCustomerId(customer.getCustomerId());
         List<Loans> loans = loansFeignClient.getLoanDetails(customer);
@@ -58,5 +63,24 @@ public class AccountsController {
                 .cards(cards)
                 .loans(loans)
                 .build();
+    }
+
+    public CustomerDetails getCustomerDetailsFallback(Customer customer, Throwable t) {
+        Accounts accounts = accountsRepository.findByCustomerId(customer.getCustomerId());
+        List<Loans> loans = loansFeignClient.getLoanDetails(customer);
+        return CustomerDetails.builder()
+                .accounts(accounts)
+                .loans(loans)
+                .build();
+    }
+
+    @GetMapping("/hello")
+    @RateLimiter(name = "sayHello", fallbackMethod = "sayWelcomeFallback")
+    public String sayWelcome() {
+        return "Welcome back";
+    }
+
+    public String sayWelcomeFallback(Throwable t) {
+        return "Hi, welcome";
     }
 }
