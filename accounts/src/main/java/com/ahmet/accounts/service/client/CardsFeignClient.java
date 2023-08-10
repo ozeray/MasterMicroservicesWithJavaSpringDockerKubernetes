@@ -5,6 +5,7 @@ import com.ahmet.accounts.model.Cards;
 import com.ahmet.accounts.model.Customer;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -14,5 +15,5 @@ import java.util.List;
 public interface CardsFeignClient {
 
     @RequestMapping(method = RequestMethod.POST, path = "myCards", consumes = "application/json")
-    List<Cards> getCardDetails(@RequestBody Customer customer);
+    List<Cards> getCardDetails(@RequestHeader("ahmet-correlation-id") String correlationId, @RequestBody Customer customer);
 }

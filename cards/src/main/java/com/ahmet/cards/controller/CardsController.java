@@ -11,15 +11,14 @@ import com.ahmet.cards.repository.CardsRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@Slf4j
 public class CardsController {
 
 	@Autowired
@@ -29,7 +28,8 @@ public class CardsController {
 	private CardsServiceConfig cardsConfig;
 	
 	@PostMapping("/myCards")
-	public List<Cards> getCardDetails(@RequestBody Customer customer) {
+	public List<Cards> getCardDetails(@RequestHeader("ahmet-correlation-id") String correlationId, @RequestBody Customer customer) {
+		log.info("CorrelationID in cards: {}", correlationId);
 		return cardsRepository.findByCustomerId(customer.getCustomerId());
 	}
 
