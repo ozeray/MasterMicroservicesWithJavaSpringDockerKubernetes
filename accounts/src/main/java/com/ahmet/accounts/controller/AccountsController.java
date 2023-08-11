@@ -57,10 +57,13 @@ public class AccountsController {
 //    @CircuitBreaker(name = "detailsForCustomerSupportApp", fallbackMethod = "getCustomerDetailsFallback")
     @Retry(name = "retryForCustomerDetails", fallbackMethod = "getCustomerDetailsFallback")
     public CustomerDetails getCustomerDetails(@RequestHeader("ahmet-correlation-id") String correlationId, @RequestBody Customer customer) {
+        log.info("getCustomerDetails started");
+
         log.info("CorrelationID in accounts: {}", correlationId);
         Accounts accounts = accountsRepository.findByCustomerId(customer.getCustomerId());
         List<Loans> loans = loansFeignClient.getLoanDetails(correlationId, customer);
         List<Cards> cards = cardsFeignClient.getCardDetails(correlationId, customer);
+        log.info("getCustomerDetails finished");
         return CustomerDetails.builder()
                 .accounts(accounts)
                 .cards(cards)
