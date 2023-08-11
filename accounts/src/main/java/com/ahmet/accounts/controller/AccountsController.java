@@ -36,7 +36,10 @@ public class AccountsController {
 
     @PostMapping("/myAccount")
     public Accounts getAccountDetails(@RequestBody Customer customer) {
-        return accountsRepository.findByCustomerId(customer.getCustomerId());
+        log.info("getAccountDetails started");
+        Accounts accounts = accountsRepository.findByCustomerId(customer.getCustomerId());
+        log.info("getAccountDetails finished");
+        return accounts;
     }
 
     @GetMapping("/accounts/properties")
