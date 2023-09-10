@@ -1,0 +1,18 @@
+Connect to GKE:
+gcloud container clusters get-credentials cluster-1 --zone us-central1-c --project microservices-398614
+
+List nodes inside cluster:
+kubectl get nodes
+
+
+List pods inside cluster:
+kubectl get pods
+
+
+List deployments inside cluster:
+kubectl get deployment
+
+
+List all services inside cluster:
+kubectl get all
+

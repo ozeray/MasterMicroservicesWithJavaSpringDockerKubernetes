@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ayozer-configmap
+data:
+  ZIPKIN_ENDPOINT: "http://zipkin-service:9411/api/v2/spans"
+  SPRING_PROFILE: "prod"
+  CONFIG_SERVER: "configserver:http://config-service:8071/"
+  EUREKA_CLIENT_URL: "http://eureka-service:8070/eureka/"
+  EUREKA_APP_NAME: "eurekaserver"
+  ACCOUNTS_APP_NAME: "accounts"

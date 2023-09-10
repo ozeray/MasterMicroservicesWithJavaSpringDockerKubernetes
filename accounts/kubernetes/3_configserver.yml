@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: configserver-deployment
+  labels:
+    app: configserver
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: configserver
+  template:
+    metadata:
+      labels:
+        app: configserver
+    spec:
+      containers:
+        - name: configserver
+          image: ayozer/configserver:latest
+          ports:
+            - containerPort: 8071
+          env:
+            - name: MANAGEMENT_ZIPKIN_TRACING_ENDPOINT
+              valueFrom:
+                configMapKeyRef:
+                  name: ayozer-configmap
+                  key: ZIPKIN_ENDPOINT
+            - name: SPRING_PROFILES_ACTIVE
+              valueFrom:
+                configMapKeyRef:
+                  name: ayozer-configmap
+                  key: SPRING_PROFILE
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: config-service
+spec:
+  selector:
+    app: configserver
+  type: LoadBalancer
+  ports:
+    - protocol: TCP
+      port: 8071
+      targetPort: 8071
