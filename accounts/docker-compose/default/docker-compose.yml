@@ -2,13 +2,24 @@ version: "3.8"
 
 services:
 
+  zipkin:
+    image: openzipkin/zipkin
+    ports:
+      - "9411:9411"
+    networks:
+      - ayozer
+
   configserver:
     image: ayozer/configserver:latest
     ports:
       - "8071:8071"
     networks:
      - ayozer
+    depends_on:
+      - zipkin
     environment:
+      SPRING_PROFILES_ACTIVE: prod
+      MANAGEMENT_ZIPKIN_TRACING_ENDPOINT: http://zipkin:9411/api/v2/spans
       ENCRYPT_KEY: D@57ws!wA
 
   eurekaserver:
@@ -29,6 +40,7 @@ services:
       SPRING_APPLICATION_NAME: eurekaserver
       SPRING_PROFILES_ACTIVE: default
       SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/
+      MANAGEMENT_ZIPKIN_TRACING_ENDPOINT: http://zipkin:9411/api/v2/spans
 
   accounts:
     image: ayozer/accounts:latest
@@ -51,6 +63,7 @@ services:
       SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/ #configserver is resolved by Docker
                                                                    #using the configserver service declared above...
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8070/eureka/
+      MANAGEMENT_ZIPKIN_TRACING_ENDPOINT: http://zipkin:9411/api/v2/spans
 
 #  accounts1:
 #    image: ayozer/accounts:latest
@@ -94,6 +107,7 @@ services:
       SPRING_PROFILES_ACTIVE: default
       SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8070/eureka/
+      MANAGEMENT_ZIPKIN_TRACING_ENDPOINT: http://zipkin:9411/api/v2/spans
     
   cards:
     image: ayozer/cards:latest
@@ -115,6 +129,7 @@ services:
       SPRING_PROFILES_ACTIVE: default
       SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8070/eureka/
+      MANAGEMENT_ZIPKIN_TRACING_ENDPOINT: http://zipkin:9411/api/v2/spans
 
   gatewayserver:
     image: eazybytes/gatewayserver:latest
@@ -139,6 +154,7 @@ services:
       SPRING_PROFILES_ACTIVE: default
       SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eurekaserver:8070/eureka/
+      MANAGEMENT_ZIPKIN_TRACING_ENDPOINT: http://zipkin:9411/api/v2/spans
 
 networks:
   ayozer:
