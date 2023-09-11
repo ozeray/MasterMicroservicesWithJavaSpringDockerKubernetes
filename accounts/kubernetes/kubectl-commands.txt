@@ -12,7 +12,63 @@ kubectl get pods
 List deployments inside cluster:
 kubectl get deployment
 
-
 List all services inside cluster:
 kubectl get all
+OR:
+kubectl get services
 
+List all config maps inside cluster:
+kubectl get configmap
+
+Apply configmap to cluster:
+kubectl apply -f .\1_configmaps.yml
+
+Delete configmap from cluster:
+kubectl delete configmap ayozer-configmap
+
+Create deployment in cluster - e.g.:
+kubectl apply -f .\3_configserver.yml
+
+Delete a certain deployment and its service:
+kubectl delete -f .\3_configserver.yml
+
+List all replica set in cluster (shows desired and current states):
+kubectl get replicaset
+
+Delete a pod:
+kubectl delete pod [POD_ID]
+
+Increase replicas via kubectl:
+kubectl scale deployment accounts-deployment --replicas=3
+
+Change image tag of a replicaset via kubectl:
+kubectl set image deployment accounts-deployment accounts=ayozer/accounts:k8s
+(If tag not found - ErrImagePull will be shown, but existing
+pods will not be stopped!)
+Will show ContainerCreating just after command is run.
+
+To see all details of a pod (including Docker image tag):
+kubectl describe pod accounts-deployment-8f9ff9957-mbk2m
+
+To force the latest image to be pulled and re-run with that image across the replicaset:
+kubectl rollout restart deployment accounts-deployment
+
+To see all event logs after any command:
+kubectl get events --sort-by=.metadata.creationTimestamp
+
+To see history of rollouts for a certain deployment:
+kubectl rollout history deployment accounts-deployment
+
+Rollback to a certain version of deployment:
+kubectl rollout undo deployment accounts-deployment --to-revision=1
+(IDs were shown in previous command)
+Older image will be used! Perfect!
+
+To see application logs:
+kubectl logs accounts-deployment-7fdc9c46c6-89hnw
+
+Get current HPA resource (horizontal pod autoscaling):
+kubectl get hpa
+
+Configure an HPA rule (At least 3 pods, at most 10 pods, add a new pod when cpu percentage reaches 70%):
+kubectl autoscale deployment accounts-deployment --min=3 --max=10 --cpu-percent=70

@@ -1,30 +1,30 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: accounts-deployment
+  name: gatewayserver-deployment
   labels:
-    app: accounts
+    app: gatewayserver
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
-      app: accounts
+      app: gatewayserver
   template:
     metadata:
       labels:
-        app: accounts
+        app: gatewayserver
     spec:
       containers:
-        - name: accounts
-          image: ayozer/accounts:latest
+        - name: gatewayserver
+          image: ayozer/gatewayserver:latest
           ports:
-            - containerPort: 8080
+            - containerPort: 8072
           env:
             - name: SPRING_APPLICATION_NAME
               valueFrom:
                 configMapKeyRef:
                   name: ayozer-configmap
-                  key: ACCOUNTS_APP_NAME
+                  key: GW_APP_NAME
             - name: SPRING_PROFILES_ACTIVE
               valueFrom:
                 configMapKeyRef:
@@ -49,12 +49,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: accounts-service
+  name: gateway-service
 spec:
   selector:
-    app: accounts
+    app: gatewayserver
   type: LoadBalancer
   ports:
     - protocol: TCP
-      port: 8080
-      targetPort: 8080
+      port: 8072
+      targetPort: 8072

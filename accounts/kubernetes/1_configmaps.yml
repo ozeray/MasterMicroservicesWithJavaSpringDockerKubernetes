@@ -9,3 +9,6 @@ data:
   EUREKA_CLIENT_URL: "http://eureka-service:8070/eureka/"
   EUREKA_APP_NAME: "eurekaserver"
   ACCOUNTS_APP_NAME: "accounts"
+  LOANS_APP_NAME: "loans"
+  CARDS_APP_NAME: "cards"
+  GW_APP_NAME: "gatewayserver"

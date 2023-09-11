@@ -83,7 +83,7 @@ public class AccountsController {
     @GetMapping("/hello")
     @RateLimiter(name = "sayHello", fallbackMethod = "sayWelcomeFallback")
     public String sayWelcome() {
-        return "Welcome back";
+        return "Welcome to Kubernetes cluster";
     }
 
     public String sayWelcomeFallback(Throwable t) {
