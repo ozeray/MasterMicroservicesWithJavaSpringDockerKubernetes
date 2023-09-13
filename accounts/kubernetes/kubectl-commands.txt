@@ -50,6 +50,9 @@ Will show ContainerCreating just after command is run.
 To see all details of a pod (including Docker image tag):
 kubectl describe pod accounts-deployment-8f9ff9957-mbk2m
 
+To see all details of a service (deployment):
+kubectl describe service accounts-service
+
 To force the latest image to be pulled and re-run with that image across the replicaset:
 kubectl rollout restart deployment accounts-deployment
 
@@ -72,3 +75,21 @@ kubectl get hpa
 
 Configure an HPA rule (At least 3 pods, at most 10 pods, add a new pod when cpu percentage reaches 70%):
 kubectl autoscale deployment accounts-deployment --min=3 --max=10 --cpu-percent=70
+
+To see detailed node info (including pod external IP of a NodePort service):
+kubectl get nodes --output wide
+
+Show the list of projects inside GCP:
+gcloud projects list
+PROJECT_IDs will be shown
+
+To make GCP SDK point to our project:
+gcloud config set project microservices-398614 (taken from previous command result)
+(Updates core/project property in local .kube)
+
+To add firewall rule in Ingress to allow access through the NodePort that was set by GKE:
+gcloud compute firewall-rules create ayozer-nodeport --allow tc:30264
+(30264 can be seen on Services-> desired service -> YAML -> nodePort property)
+
+To see the status of a service just deployed (e.g. keycloak):
+kubectl get --namespace default svc -w keycloak

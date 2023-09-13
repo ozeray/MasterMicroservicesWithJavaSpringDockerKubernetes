@@ -1,0 +1,6 @@
+dependencies:
+- name: ayozer-common
+  repository: file://../../ayozer-common
+  version: 0.1.0
+digest: sha256:ef703d841f8b612429f41061bf13f6c10de397771e75d347393d6801d36eed0b
+generated: "2023-09-12T14:57:39.4810089+03:00"

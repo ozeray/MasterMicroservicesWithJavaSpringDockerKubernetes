@@ -83,7 +83,8 @@ public class AccountsController {
     @GetMapping("/hello")
     @RateLimiter(name = "sayHello", fallbackMethod = "sayWelcomeFallback")
     public String sayWelcome() {
-        return "Welcome to Kubernetes cluster";
+        String host = System.getenv("HOSTNAME"); // Will change depending on the pod being used
+        return "Welcome to Kubernetes cluster from host: " + host;
     }
 
     public String sayWelcomeFallback(Throwable t) {

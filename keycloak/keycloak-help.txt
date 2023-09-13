@@ -1,0 +1,17 @@
+Run Keycloak via Docker in dev mode:
+docker run -d -p 7080:8080 -e KEYCLOAK_ADMIN=admin -e KEYCLOAK_ADMIN_PASSWORD=admin quay.io/keycloak/keycloak:22.0.3 start-dev
+
+URL to see endpoints to use while generating tokens:
+http://localhost:7080/realms/master/.well-known/openid-configuration
+Use "token_endpoint" URL there to generate tokens (using POST request, body containing client ID and secret).
+
+Use "jwks_uri" for Spring Gateway can validate tokens:
+http://localhost:7080/realms/master/protocol/openid-connect/certs
+
+Install Keycloak Helm chart to cluster:
+helm install keycloak oci://registry-1.docker.io/bitnamicharts/keycloak --set service.type=LoadBalancer --set auth.adminPassword=secretpassword --set auth.adminUser=admin
+
+If you didn't specify username/password above;
+To learn admin password of Keycloak installed into cluster (admin username is 'user'):
+echo Password: $(kubectl get secret --namespace default keycloak -o jsonpath="{.data.admin-password}" | base64 --decode)
+(Run through GCP console Kubectl. Doesn't work on Windows)

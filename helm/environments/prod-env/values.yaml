@@ -1,0 +1,7 @@
+global:
+  configMapName: ayozer-prod-configmap
+  zipkinBaseURl: http://zipkin:9411/api/v2/spans
+  activeProfile: prod
+  configServerURl: configserver:http://configserver:8071/
+  eurekaServerURl: http://eurekaserver:8070/eureka/
+  keycloakURL: http://keycloak:80/realms/master/protocol/openid-connect/certs

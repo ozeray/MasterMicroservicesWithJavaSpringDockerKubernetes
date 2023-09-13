@@ -1,0 +1,12 @@
+{{- define "common.configmap" -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.global.configMapName }}
+data:
+  ZIPKIN_ENDPOINT: "{{ .Values.global.zipkinBaseURl }}"
+  SPRING_PROFILE: "{{ .Values.global.activeProfile }}"
+  CONFIG_SERVER: "{{ .Values.global.configServerURl }}"
+  EUREKA_CLIENT_URL: "{{ .Values.global.eurekaServerURl }}"
+  JWKS_URI: "{{ .Values.global.keycloakURL }}"
+{{- end -}}
