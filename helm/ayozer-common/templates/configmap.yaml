@@ -9,4 +9,7 @@ data:
   CONFIG_SERVER: "{{ .Values.global.configServerURl }}"
   EUREKA_CLIENT_URL: "{{ .Values.global.eurekaServerURl }}"
   JWKS_URI: "{{ .Values.global.keycloakURL }}"
+  TOKEN_URI: "{{ .Values.global.tokenURI }}"
+  AUTHORIZATION_URI: "{{ .Values.global.authorizationURI }}"
+  USERINFO_URI: "{{ .Values.global.userinfoURI }}"
 {{- end -}}

@@ -5,3 +5,9 @@ global:
   configServerURl: configserver:http://configserver:8071/
   eurekaServerURl: http://eurekaserver:8070/eureka/
   keycloakURL: http://keycloak:80/realms/master/protocol/openid-connect/certs
+  tokenURI: http://keycloak:80/realms/master/protocol/openid-connect/token
+  authorizationURI: http://keycloak:80/realms/master/protocol/openid-connect/auth
+  userinfoURI: http://keycloak:80/realms/master/protocol/openid-connect/userinfo
+  secretName: ayozer-dev-secret
+  keycloakclientid: ayozer-gatewayui
+  keycloakclientsecret: z4IbQkZpJBlPvOcs6C1oM89K364wIN6T

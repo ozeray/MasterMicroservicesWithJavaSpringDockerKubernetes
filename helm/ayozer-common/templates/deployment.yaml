@@ -54,11 +54,46 @@ spec:
                 name: {{ .Values.global.configMapName }}
                 key: EUREKA_CLIENT_URL
           {{- end }}
-          {{- if .Values.keycloak_enabled }}
+          {{- if .Values.resourceserver_enabled }}
           - name: SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_JWK-SET-URI
             valueFrom:
               configMapKeyRef:
                 name: {{ .Values.global.configMapName }}
                 key: JWKS_URI
+          {{- end }}
+          {{- if .Values.keycloak_enabled }}
+          - name: SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_KEYCLOAK_TOKEN-URI
+            valueFrom:
+              configMapKeyRef:
+                name: {{ .Values.global.configMapName }}
+                key: TOKEN_URI
+          {{- end }}
+          {{- if .Values.keycloak_enabled }}
+          - name: SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_KEYCLOAK_AUTHORIZATION-URI
+            valueFrom:
+              configMapKeyRef:
+                name: {{ .Values.global.configMapName }}
+                key: AUTHORIZATION_URI
+          {{- end }}
+          {{- if .Values.keycloak_enabled }}
+          - name: SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_KEYCLOAK_USER-INFO-URI
+            valueFrom:
+              configMapKeyRef:
+                name: {{ .Values.global.configMapName }}
+                key: USERINFO_URI
+          {{- end }}
+          {{- if .Values.keycloak_enabled }}
+          - name: SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_AYOZER-GATEWAY_CLIENT-ID
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.global.secretName }}
+                key: keycloakclientid
+          {{- end }}
+          {{- if .Values.keycloak_enabled }}
+          - name: SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_AYOZER-GATEWAY_CLIENT-SECRET
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.global.secretName }}
+                key: keycloakclientsecret
           {{- end }}
 {{- end -}}

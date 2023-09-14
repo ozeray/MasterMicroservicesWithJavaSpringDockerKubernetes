@@ -25,3 +25,4 @@ profile_enabled: true
 eureka_enabled: true
 appname_enabled: true
 keycloak_enabled: false
+resourceserver_enabled: true

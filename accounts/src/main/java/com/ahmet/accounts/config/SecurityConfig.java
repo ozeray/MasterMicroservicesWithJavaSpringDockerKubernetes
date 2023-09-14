@@ -8,6 +8,8 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.web.SecurityFilterChain;
 
+import static org.springframework.security.web.util.matcher.AntPathRequestMatcher.antMatcher;
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
@@ -17,7 +19,7 @@ public class SecurityConfig {
         JwtAuthenticationConverter jwtAuthenticationConverter = new JwtAuthenticationConverter();
         jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter(new KeycloakRoleConverter());
 
-        http.authorizeHttpRequests(authorize -> authorize.requestMatchers("/hello").hasRole("ACCOUNTS")
+        http.authorizeHttpRequests(authorize -> authorize.requestMatchers(antMatcher("/hello")).hasRole("ACCOUNTS")
                         .anyRequest().authenticated())
                 .oauth2ResourceServer(server -> server.jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter)));
         http.csrf(AbstractHttpConfigurer::disable);

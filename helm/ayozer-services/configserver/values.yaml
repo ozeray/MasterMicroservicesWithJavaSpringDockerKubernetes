@@ -20,3 +20,4 @@ profile_enabled: true
 eureka_enabled: false
 appname_enabled: false
 keycloak_enabled: false
+resourceserver_enabled: false
